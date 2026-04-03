@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
+require('dotenv').config();
 
-const url = 'mongodb+srv://markklepanchuk_db_user:Ytyfdb;e!1!1!1@maincluster.qtzluy1.mongodb.net/?appName=MainCluster';
+const url = process.env.MONGO_DB_URL;
 
 const client = new MongoClient(url);
 
