@@ -1,83 +1,64 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
 require('dotenv').config();
 
-const url = process.env.MONGO_DB_URL;
+const PORT = process.env.PORT || 3000;
 
-const client = new MongoClient(url);
-
-async function connectDB() {
-  await client.connect();
-
-  const db = client.db('db_logs');
-  return db.collection('logs');
-}
-
-const server = http.createServer(async (req, res) => {
+const server = http.createServer((req, res) => {
   const { url: reqUrl } = req;
 
-  // Serve root page with data
-  if (reqUrl === '/') {
-    try {
-      const collection = await connectDB();
-      const data = await collection.find({}).toArray();
-      
-      let html = fs.readFileSync(path.join(__dirname, '../web/index.html'), 'utf-8');
-      
-      // Inject data into HTML
-      const htmlData = data.map(item => {
-        const tags = item.tags;
-        const tagsBlock = tags.map(tag => `<span class="tag">${tag}</span>`).join(' ');
-
-        return (`
-          <div class="log-entry">
-            <h3>${item.name}</h3>
-            <p>${item.age}</p>
-            <p>${item.email}</p>
-            <p>${item.isActive}</p>
-            <div class="tags">${tagsBlock}</div>
-          </div>  
-        `);
-      });
-      
-      html = html.replace('<!--LOGS_PLACEHOLDER-->', htmlData.join(''));
-      
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      return res.end(html);
-    } catch (err) {
-      console.error('Error:', err);
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      return res.end('Server Error');
-    }
+  // Serve static files from web directory
+  let filePath = path.join(__dirname, '../web', reqUrl === '/' ? 'index.html' : reqUrl);
+  
+  // Prevent directory traversal
+  if (!filePath.startsWith(path.join(__dirname, '../web'))) {
+    res.writeHead(403, { 'Content-Type': 'text/plain' });
+    return res.end('Forbidden');
   }
 
-  // Serve static files (CSS, JS, etc.)
-  if (reqUrl.startsWith('/')) {
-    const filePath = path.join(__dirname, '../web', reqUrl);
+  // Check if file exists
+  if (fs.existsSync(filePath)) {
+    const ext = path.extname(filePath);
+    const contentTypes = {
+      '.html': 'text/html',
+      '.css': 'text/css',
+      '.js': 'application/javascript',
+      '.json': 'application/json',
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.gif': 'image/gif',
+      '.svg': 'image/svg+xml'
+    };
     
-    if (fs.existsSync(filePath)) {
-      const ext = path.extname(filePath);
-      const contentTypes = {
-        '.html': 'text/html',
-        '.css': 'text/css',
-        '.js': 'application/javascript',
-        '.json': 'application/json'
-      };
-      const contentType = contentTypes[ext] || 'text/plain';
-      
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      res.writeHead(200, { 'Content-Type': contentType });
-      return res.end(fileContent);
-    }
+    const contentType = contentTypes[ext] || 'text/plain';
+    const fileContent = fs.readFileSync(filePath);
+    
+    res.writeHead(200, { 'Content-Type': contentType });
+    return res.end(fileContent);
   }
 
-  res.writeHead(404, { 'Content-Type': 'text/plain' });
-  res.end('Not Found');
+  // 404 Not Found
+  res.writeHead(404, { 'Content-Type': 'text/html' });
+  res.end(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>404 - Not Found</title>
+      <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        h1 { color: #667eea; }
+      </style>
+    </head>
+    <body>
+      <h1>404 - Page Not Found</h1>
+      <p>The page you're looking for doesn't exist.</p>
+      <a href="/">Back to Home</a>
+    </body>
+    </html>
+  `);
 });
 
-server.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+server.listen(PORT, () => {
+  console.log(`🚀 Portfolio server running on http://localhost:${PORT}`);
 });

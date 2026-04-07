@@ -1,22 +1,52 @@
 {
-  "name": "intro-web",
+  "name": "portfolio",
   "version": "1.0.0",
-  "description": "Web application with Node.js backend",
-  "main": "backend/app.js",
+  "description": "FAANG-ready full-stack portfolio showcasing real-time systems, architecture, and projects",
+  "private": true,
   "scripts": {
-    "start": "node backend/app.js",
-    "dev": "node backend/app.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.0.0",
-    "dotenv": "^16.0.3",
-    "cors": "^2.8.5"
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.3.0",
+    "axios": "^1.6.0",
+    "socket.io-client": "^4.7.0",
+    "dotenv": "^16.3.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "bcryptjs": "^2.4.3",
+    "react-icons": "^4.12.0",
+    "clsx": "^2.0.0",
+    "tailwindcss": "^3.4.0",
+    "framer-motion": "^10.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.55.0",
+    "eslint-config-next": "^14.0.0",
+    "prettier": "^3.1.0",
+    "postcss": "^8.4.32",
+    "autoprefixer": "^10.4.16",
+    "@testing-library/react": "^14.1.0",
+    "@testing-library/jest-dom": "^6.1.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
   },
   "engines": {
-    "node": "14.x"
+    "node": ">=18.0.0"
   }
 }

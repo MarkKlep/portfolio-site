@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply scroll-smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-dark text-white;
+}
+
+a {
+  @apply transition-colors;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-accent rounded-full hover:bg-accent-secondary;
+}

@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0-alpine
+    container_name: portfolio-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  nextjs:
+    build: .
+    container_name: portfolio-nextjs
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: mongodb://root:rootpassword@mongodb:27017/portfolio?authSource=admin
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_USERNAME: ${GITHUB_USERNAME}
+      JWT_SECRET: your_super_secret_jwt_key
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./pages:/app/pages
+      - ./lib:/app/lib
+      - ./components:/app/components
+      - ./styles:/app/styles
+      - ./types:/app/types
+      - /app/.next
+      - /app/node_modules
+    networks:
+      - app-network
+    command: npm run dev
+
+volumes:
+  mongo_data:
+
+networks:
+  app-network:
+    driver: bridge
