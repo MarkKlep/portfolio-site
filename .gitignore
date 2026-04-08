@@ -4,3 +4,7 @@ node_modules/
 api.txt
 *.log
 .DS_Store
+.next/
+out/
+dist/
+build/
