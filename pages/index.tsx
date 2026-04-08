@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { ContactForm } from '@/components/ContactForm';
 import { GithubRepoList } from '@/components/GithubRepoList';
-import { SkillSection } from '@/components/SkillSection';
 import { usePageTracker } from '@/lib/hooks';
 
 const Home: NextPage = () => {
@@ -113,7 +112,7 @@ const Home: NextPage = () => {
           <div className="max-w-2xl mx-auto">
             <div className="border-2 border-accent rounded-lg p-6 bg-dark-secondary">
               <h3 className="text-2xl font-bold text-accent mb-2">
-                Bachelor's Degree in Software Engineering
+                Bachelor&apos;s Degree in Software Engineering
               </h3>
               <p className="text-xl font-semibold mb-4">Oles Honchar Dnipro National University</p>
               <p className="text-gray-400 mb-4">Sep 2021 - Jun 2025 | Dnipro, Ukraine</p>
@@ -205,7 +204,7 @@ const Home: NextPage = () => {
 
         {/* Contact Section */}
         <section id="contact" className="py-20 px-4 max-w-2xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center">Let's Connect</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center">Let&apos;s Connect</h2>
           <div className="mb-8 text-center">
             <p className="text-gray-400 mb-4">Have an opportunity or just want to chat? Reach out!</p>
             <div className="flex flex-col gap-4 items-center">

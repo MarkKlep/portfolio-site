@@ -125,7 +125,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       {/* Success */}
       {success && (
         <div className="p-3 bg-green-900 text-green-200 rounded-lg text-sm">
-          ✅ Message sent successfully! I'll get back to you soon.
+          ✅ Message sent successfully! I&apos;ll get back to you soon.
         </div>
       )}
 

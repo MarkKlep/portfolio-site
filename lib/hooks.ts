@@ -61,7 +61,7 @@ export function useAsync<T>(url: string, dependencies: any[] = []): UseAsyncStat
     return () => {
       controller.abort();
     };
-  }, dependencies);
+  }, [url, dependencies]);
 
   return state;
 }

@@ -3,7 +3,7 @@ import { connectDB } from '@/lib/db';
 import { Contact } from '@/lib/models';
 import { withErrorHandler, withMethods } from '@/lib/middleware';
 
-async function handleGet(req: NextApiRequest, res: NextApiResponse) {
+async function handleGet(_req: NextApiRequest, res: NextApiResponse) {
   await connectDB();
   const messages = await Contact.find().sort({ createdAt: -1 }).limit(50);
   res.status(200).json(messages);

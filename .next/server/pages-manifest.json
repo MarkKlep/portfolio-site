@@ -1,8 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/api/track": "pages/api/track.js",
-  "/api/github": "pages/api/github.js"
-}
+{"/_app":"pages/_app.js","/api/blog":"pages/api/blog.js","/api/analytics":"pages/api/analytics.js","/api/contact":"pages/api/contact.js","/api/github":"pages/api/github.js","/api/projects":"pages/api/projects.js","/api/hello":"pages/api/hello.js","/api/track":"pages/api/track.js","/":"pages/index.html","/_error":"pages/_error.js","/_document":"pages/_document.js","/404":"pages/404.html"}
